@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/projects', function () {
-    return;
+Route::post('/projects', function (Request $request) {
+    \App\Models\Projects::create(
+        $request->only(['title', 'description'])
+    );
 });
