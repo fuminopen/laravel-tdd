@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/projects', function () {
+    return;
+});
+
 Route::post('/projects', function (Request $request) {
     \App\Models\Project::create(
         $request->only(['title', 'description'])
