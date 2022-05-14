@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::post('/projects', function (Request $request) {
-    \App\Models\Projects::create(
+    \App\Models\Project::create(
         $request->only(['title', 'description'])
     );
 });
