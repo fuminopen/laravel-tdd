@@ -19,7 +19,9 @@ Route::get('/', function () {
 });
 
 Route::get('/projects', function () {
-    return;
+    $projects = \App\Models\Project::all();
+
+    return view('projects', ['projects' => $projects]);
 });
 
 Route::post('/projects', function (Request $request) {
