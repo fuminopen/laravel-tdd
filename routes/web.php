@@ -24,8 +24,4 @@ Route::get('/projects', function () {
     return view('projects', ['projects' => $projects]);
 });
 
-Route::post('/projects', function (Request $request) {
-    \App\Models\Project::create(
-        $request->only(['title', 'description'])
-    );
-});
+Route::post('/projects', [\App\Http\Controllers\ProjectsController::class, 'store']);
