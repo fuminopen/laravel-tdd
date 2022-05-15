@@ -18,10 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/projects', function () {
-    $projects = \App\Models\Project::all();
-
-    return view('projects', ['projects' => $projects]);
-});
+Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index']);
 
 Route::post('/projects', [\App\Http\Controllers\ProjectsController::class, 'store']);
