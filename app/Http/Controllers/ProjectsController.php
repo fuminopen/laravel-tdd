@@ -8,11 +8,21 @@ use Illuminate\Http\Request;
 class ProjectsController extends Controller
 {
     /**
+     * @var Project
+     */
+    protected Project $project;
+
+    public function __construct(Project $project)
+    {
+        $this->project = $project;
+    }
+
+    /**
      * display records on get request
      */
     public function index(Request $request)
     {
-        $projects = Project::all();
+        $projects = $this->project->all();
 
         return view('projects', ['projects' => $projects]);
     }
@@ -22,7 +32,7 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        Project::create(
+        $this->project->create(
             $request->only(['title', 'description'])
         );
     }
