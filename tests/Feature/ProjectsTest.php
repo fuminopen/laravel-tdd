@@ -11,6 +11,9 @@ class ProjectsTest extends TestCase
     use WithFaker;
     use RefreshDatabase;
 
+    /**
+     * @test
+     */
     public function test_a_user_can_create_a_project()
     {
         $this->withoutExceptionHandling();
@@ -25,5 +28,13 @@ class ProjectsTest extends TestCase
         $this->assertDatabaseHas('projects', $attributes);
 
         $this->get('/projects')->assertSee($attributes['title']);
+    }
+
+    /**
+     * @test
+     */
+    public function test_request_needs_validation()
+    {
+        $this->post('/projects', [])->assertSessionHasErrors('title');
     }
 }
