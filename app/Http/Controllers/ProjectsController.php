@@ -2,27 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Services\ProjectsService;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
     /**
-     * @var Project
-     */
-    protected Project $project;
-
-    public function __construct(Project $project)
-    {
-        $this->project = $project;
-    }
-
-    /**
      * display records on get request
      */
     public function index(Request $request)
     {
-        $projects = $this->project->all();
+        $projects = app()->make(ProjectsService::class)
+            ->getAll();
 
         return view('projects', ['projects' => $projects]);
     }
@@ -32,8 +23,10 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->project->create(
-            $request->only(['title', 'description'])
-        );
+        app()->make(ProjectsService::class)
+            ->create(
+                $request->title,
+                $request->description
+            );
     }
 }
