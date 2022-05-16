@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateProjectsRequest;
 use App\Services\ProjectsService;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class ProjectsController extends Controller
     /**
      * create records on post request
      */
-    public function store(Request $request)
+    public function store(CreateProjectsRequest $request)
     {
         app()->make(ProjectsService::class)
             ->create(
