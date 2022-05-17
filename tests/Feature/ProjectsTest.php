@@ -40,4 +40,21 @@ class ProjectsTest extends TestCase
             'description',
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function test_request_params_must_be_string()
+    {
+        $this->post(
+            '/projects',
+            [
+                'title' => ['test title'],
+                'description' => ['test description'],
+            ]
+        )->assertSessionHasErrors([
+            'title',
+            'description',
+        ]);
+    }
 }
