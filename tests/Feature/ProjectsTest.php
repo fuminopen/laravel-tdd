@@ -35,6 +35,9 @@ class ProjectsTest extends TestCase
      */
     public function test_request_needs_validation()
     {
-        $this->post('/projects', [])->assertSessionHasErrors('title');
+        $this->post('/projects', [])->assertSessionHasErrors([
+            'title',
+            'description',
+        ]);
     }
 }
