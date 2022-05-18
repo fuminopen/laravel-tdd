@@ -2,14 +2,27 @@
 
 namespace Tests\Feature;
 
+use App\Models\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ProjectsTest extends TestCase
+final class ProjectsTest extends TestCase
 {
     use WithFaker;
     use RefreshDatabase;
+
+    /**
+     * @var \App\Models\Project
+     */
+    private Project $project;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->project = new Project();
+    }
 
     /**
      * @test
@@ -33,28 +46,40 @@ class ProjectsTest extends TestCase
     /**
      * @test
      */
-    public function test_request_needs_validation()
+    public function test_title_needs_validation()
     {
-        $this->post('/projects', [])->assertSessionHasErrors([
-            'title',
-            'description',
-        ]);
+        $attributes = $this->project->factory()->raw(['title' => '']);
+
+        $this->post('/projects', $attributes)->assertSessionHasErrors('title');
     }
 
     /**
      * @test
      */
-    public function test_request_params_must_be_string()
+    public function test_description_needs_validation()
     {
-        $this->post(
-            '/projects',
-            [
-                'title' => ['test title'],
-                'description' => ['test description'],
-            ]
-        )->assertSessionHasErrors([
-            'title',
-            'description',
-        ]);
+        $attributes = $this->project->factory()->raw(['description' => '']);
+
+        $this->post('/projects', $attributes)->assertSessionHasErrors('description');
+    }
+
+    /**
+     * @test
+     */
+    public function test_title_must_be_string()
+    {
+        $attributes = $this->project->factory()->raw(['title' => ['this is type array']]);
+
+        $this->post('/projects', $attributes)->assertSessionHasErrors('title');
+    }
+
+    /**
+     * @test
+     */
+    public function test_description_must_be_string()
+    {
+        $attributes = $this->project->factory()->raw(['description' => ['this is type array']]);
+
+        $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
 }
