@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateProjectsRequest;
+use App\Models\Project;
 use App\Services\ProjectsService;
 use Illuminate\Http\Request;
 
@@ -38,6 +39,13 @@ class ProjectsController extends Controller
      */
     public function show(Request $request)
     {
-        return view('projects.show');
+        $project = Project::findOrFail($request->project);
+
+        return view(
+            'projects.show',
+            [
+                'project' => $project,
+            ]
+        );
     }
 }
