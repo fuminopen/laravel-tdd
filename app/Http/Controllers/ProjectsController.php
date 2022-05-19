@@ -29,5 +29,7 @@ class ProjectsController extends Controller
                 $request->title,
                 $request->description
             );
+
+        return redirect('/projects');
     }
 }
