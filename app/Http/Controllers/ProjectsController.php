@@ -32,4 +32,12 @@ class ProjectsController extends Controller
 
         return redirect('/projects');
     }
+
+    /**
+     * show a specific project
+     */
+    public function show(Request $request)
+    {
+        return view('projects.show');
+    }
 }
