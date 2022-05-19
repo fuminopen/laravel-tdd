@@ -46,6 +46,20 @@ final class ProjectsTest extends TestCase
     /**
      * @test
      */
+    public function test_a_user_can_view_a_project()
+    {
+        $this->withoutExceptionHandling();
+
+        $project = $this->project->factory()->create();
+
+        $this->get('/projects/' . $project->id)
+            ->assertSee($project->title)
+            ->assertSee($project->description);
+    }
+
+    /**
+     * @test
+     */
     public function test_title_needs_validation()
     {
         $attributes = $this->project->factory()->raw(['title' => '']);
