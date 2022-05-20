@@ -13,4 +13,12 @@ class Project extends Model
         'title',
         'description',
     ];
+
+    /**
+     * returns path to project detail page
+     */
+    public function path(): string
+    {
+        return '/projects/' . $this->id;
+    }
 }
