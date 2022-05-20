@@ -37,10 +37,8 @@ class ProjectsController extends Controller
     /**
      * show a specific project
      */
-    public function show(Request $request)
+    public function show(Project $project)
     {
-        $project = Project::findOrFail($request->project);
-
         return view(
             'projects.show',
             [
