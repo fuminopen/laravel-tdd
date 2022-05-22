@@ -17,7 +17,7 @@ class ProjectsController extends Controller
         $projects = app()->make(ProjectsService::class)
             ->getAll();
 
-        return view('projects', ['projects' => $projects]);
+        return view('projects.index', ['projects' => $projects]);
     }
 
     /**
