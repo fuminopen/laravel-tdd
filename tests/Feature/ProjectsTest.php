@@ -80,6 +80,16 @@ final class ProjectsTest extends TestCase
     /**
      * @test
      */
+    public function test_a_project_needs_an_owner()
+    {
+        $attributes = $this->project->factory()->raw();
+
+        $this->post('/projects', $attributes)->assertSessionHasErrors('owner');
+    }
+
+    /**
+     * @test
+     */
     public function test_title_must_be_string()
     {
         $attributes = $this->project->factory()->raw(['title' => ['this is type array']]);
