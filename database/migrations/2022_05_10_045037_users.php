@@ -20,6 +20,8 @@ return new class extends Migration
             $table->dateTime('email_verified_at');
             $table->string('password');
             $table->unsignedInteger('remember_token');
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
         });
     }
 
