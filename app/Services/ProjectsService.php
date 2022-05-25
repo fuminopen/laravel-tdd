@@ -28,12 +28,13 @@ class ProjectsService
     /**
      * create a record
      */
-    public function create(string $title, string $description): ?Project
+    public function create(string $title, string $description, int $ownerId): ?Project
     {
         return $this->project->create(
             [
                 'title' => $title,
                 'description' => $description,
+                'owner_id' => $ownerId,
             ]
         );
     }

@@ -28,7 +28,8 @@ class ProjectsController extends Controller
         app()->make(ProjectsService::class)
             ->create(
                 $request->title,
-                $request->description
+                $request->description,
+                $request->owner_id
             );
 
         return redirect('/projects');

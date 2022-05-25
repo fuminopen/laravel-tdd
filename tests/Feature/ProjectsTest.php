@@ -29,10 +29,7 @@ final class ProjectsTest extends TestCase
      */
     public function test_a_user_can_create_a_project()
     {
-        $attributes = [
-            'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
-        ];
+        $attributes = Project::factory()->raw();
 
         $this->post('/projects', $attributes)->assertRedirect('/projects');
 
