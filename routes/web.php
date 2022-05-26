@@ -22,4 +22,4 @@ Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index
 
 Route::get('/projects/{project}', [\App\Http\Controllers\ProjectsController::class, 'show']);
 
-Route::post('/projects', [\App\Http\Controllers\ProjectsController::class, 'store']);
+Route::post('/projects', [\App\Http\Controllers\ProjectsController::class, 'store'])->middleware('auth');

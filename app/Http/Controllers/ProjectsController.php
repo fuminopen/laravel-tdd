@@ -25,11 +25,13 @@ class ProjectsController extends Controller
      */
     public function store(CreateProjectsRequest $request)
     {
+        $ownerId = auth()->id();
+
         app()->make(ProjectsService::class)
             ->create(
                 $request->title,
                 $request->description,
-                $request->owner_id
+                $ownerId
             );
 
         return redirect('/projects');
