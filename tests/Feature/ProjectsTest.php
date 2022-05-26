@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -27,9 +28,13 @@ final class ProjectsTest extends TestCase
     /**
      * @test
      */
-    public function test_a_user_can_create_a_project()
+    public function test_only_authenticated_user_can_create_a_project()
     {
-        $attributes = Project::factory()->raw();
+        $this->actingAs(User::factory()->create());
+
+        $attributes = Project::factory()->raw([
+            'owner_id' => auth()->id(),
+        ]);
 
         $this->post('/projects', $attributes)->assertRedirect('/projects');
 
@@ -41,7 +46,7 @@ final class ProjectsTest extends TestCase
     /**
      * @test
      */
-    public function test_a_user_can_view_a_project()
+    public function test_user_can_view_a_project()
     {
         $project = $this->project->factory()->create();
 
@@ -55,7 +60,12 @@ final class ProjectsTest extends TestCase
      */
     public function test_title_needs_validation()
     {
-        $attributes = $this->project->factory()->raw(['title' => '']);
+        $this->actingAs(User::factory()->create());
+
+        $attributes = $this->project->factory()->raw([
+            'title' => '',
+            'owner_id' => auth()->id(),
+        ]);
 
         $this->post('/projects', $attributes)->assertSessionHasErrors('title');
     }
@@ -65,7 +75,12 @@ final class ProjectsTest extends TestCase
      */
     public function test_description_needs_validation()
     {
-        $attributes = $this->project->factory()->raw(['description' => '']);
+        $this->actingAs(User::factory()->create());
+
+        $attributes = $this->project->factory()->raw([
+            'description' => '',
+            'owner_id' => auth()->id(),
+        ]);
 
         $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
@@ -75,9 +90,13 @@ final class ProjectsTest extends TestCase
      */
     public function test_a_project_requires_an_owner()
     {
-        $attributes = $this->project->factory()->raw(['owner_id' => null]);
+        $this->actingAs(User::factory()->create());
 
-        $this->post('/projects', $attributes)->assertRedirect('login');
+        $attributes = $this->project->factory()->raw([
+            'owner_id' => null,
+        ]);
+
+        $this->post('/projects', $attributes)->assertRedirect('/projects');
     }
 
     /**
@@ -85,7 +104,12 @@ final class ProjectsTest extends TestCase
      */
     public function test_title_must_be_string()
     {
-        $attributes = $this->project->factory()->raw(['title' => ['this is type array']]);
+        $this->actingAs(User::factory()->create());
+
+        $attributes = $this->project->factory()->raw([
+            'title' => ['this is type array'],
+            'owner_id' => auth()->id(),
+        ]);
 
         $this->post('/projects', $attributes)->assertSessionHasErrors('title');
     }
@@ -95,7 +119,12 @@ final class ProjectsTest extends TestCase
      */
     public function test_description_must_be_string()
     {
-        $attributes = $this->project->factory()->raw(['description' => ['this is type array']]);
+        $this->actingAs(User::factory()->create());
+
+        $attributes = $this->project->factory()->raw([
+            'description' => ['this is type array'],
+            'owner_id' => auth()->id(),
+        ]);
 
         $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
