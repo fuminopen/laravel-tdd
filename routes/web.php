@@ -23,7 +23,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index'])->middleware('auth');
 
-Route::get('/projects/{project}', [\App\Http\Controllers\ProjectsController::class, 'show']);
+Route::get('/projects/{project}', [\App\Http\Controllers\ProjectsController::class, 'show'])->middleware('auth');
 
 Route::post('/projects', [\App\Http\Controllers\ProjectsController::class, 'store'])->middleware('auth');
 

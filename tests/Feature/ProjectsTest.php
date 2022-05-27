@@ -46,9 +46,29 @@ final class ProjectsTest extends TestCase
     /**
      * @test
      */
+    public function test_only_authenticated_user_view_projects()
+    {
+        $this->get('/projects')->assertRedirect('login');
+    }
+
+    /**
+     * @test
+     */
+    public function test_only_authenticated_user_view_a_single_project()
+    {
+        $project = Project::factory()->create();
+
+        $this->get($project->path())->assertRedirect('login');
+    }
+
+    /**
+     * @test
+     */
     public function test_user_can_view_a_project()
     {
-        $project = $this->project->factory()->create();
+        $this->be(User::factory()->create());
+
+        $project = $this->project->factory()->create(['owner_id' => auth()->user()->id]);
 
         $this->get($project->path())
             ->assertSee($project->title)
