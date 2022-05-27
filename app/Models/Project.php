@@ -15,6 +15,11 @@ class Project extends Model
         'owner_id',
     ];
 
+    public function owner()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
     /**
      * returns path to project detail page
      */
