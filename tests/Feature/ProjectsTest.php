@@ -64,7 +64,7 @@ final class ProjectsTest extends TestCase
     /**
      * @test
      */
-    public function test_user_can_view_a_project()
+    public function test_users_can_view_their_project()
     {
         $this->be(User::factory()->create());
 
@@ -73,6 +73,18 @@ final class ProjectsTest extends TestCase
         $this->get($project->path())
             ->assertSee($project->title)
             ->assertSee($project->description);
+    }
+
+    /**
+     * @test
+     */
+    public function test_users_cannot_view_others_project()
+    {
+        $this->be(User::factory()->create());
+
+        $project = $this->project->factory()->create();
+
+        $this->get($project->path())->assertStatus(403);
     }
 
     /**
