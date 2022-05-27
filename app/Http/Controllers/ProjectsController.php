@@ -14,8 +14,7 @@ class ProjectsController extends Controller
      */
     public function index(Request $request)
     {
-        $projects = app()->make(ProjectsService::class)
-            ->getAll();
+        $projects = auth()->user()->projects;
 
         return view('projects.index', ['projects' => $projects]);
     }

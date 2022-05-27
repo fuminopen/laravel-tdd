@@ -21,7 +21,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index']);
+Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index'])->middleware('auth');
 
 Route::get('/projects/{project}', [\App\Http\Controllers\ProjectsController::class, 'show']);
 
