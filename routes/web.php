@@ -21,10 +21,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index'])->middleware('auth');
 
-Route::get('/projects/{project}', [\App\Http\Controllers\ProjectsController::class, 'show'])->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index']);
 
-Route::post('/projects', [\App\Http\Controllers\ProjectsController::class, 'store'])->middleware('auth');
+    Route::get('/projects/{project}', [\App\Http\Controllers\ProjectsController::class, 'show']);
+
+    Route::post('/projects', [\App\Http\Controllers\ProjectsController::class, 'store']);
+});
 
 require __DIR__.'/auth.php';
