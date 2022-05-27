@@ -25,7 +25,10 @@ class ProjectsController extends Controller
      */
     public function store(CreateProjectsRequest $request)
     {
-        auth()->user()->projects()->create();
+        auth()->user()->projects()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
 
         return redirect('/projects');
     }
