@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
-    <form class="container" style="padding-top: 40px">
+    <form method="POST" action="/projects" class="container" style="padding-top: 40px">
+        @csrf
+
         <h1 class="heading is-l">Create Project</h1>
 
         <div class="field">
