@@ -32,6 +32,8 @@ final class ProjectsTest extends TestCase
     {
         $this->get('/projects')->assertRedirect('login');
 
+        $this->get('/projects/create')->assertRedirect('login');
+
         $project = Project::factory()->create();
 
         $this->get($project->path())->assertRedirect('login');
