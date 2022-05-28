@@ -30,7 +30,15 @@ final class ProjectsTest extends TestCase
      */
     public function test_only_authenticated_user_can_create_a_project()
     {
+        $this->get('/projects')->assertRedirect('login');
+
+        $project = Project::factory()->create();
+
+        $this->get($project->path())->assertRedirect('login');
+
         $this->actingAs(User::factory()->create());
+
+        $this->get('/projects/create')->assertStatus(200);
 
         $attributes = Project::factory()->raw([
             'owner_id' => auth()->id(),
@@ -41,24 +49,6 @@ final class ProjectsTest extends TestCase
         $this->assertDatabaseHas('projects', $attributes);
 
         $this->get('/projects')->assertSee($attributes['title']);
-    }
-
-    /**
-     * @test
-     */
-    public function test_only_authenticated_user_view_projects()
-    {
-        $this->get('/projects')->assertRedirect('login');
-    }
-
-    /**
-     * @test
-     */
-    public function test_only_authenticated_user_view_a_single_project()
-    {
-        $project = Project::factory()->create();
-
-        $this->get($project->path())->assertRedirect('login');
     }
 
     /**
