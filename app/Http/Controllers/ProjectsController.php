@@ -20,6 +20,14 @@ class ProjectsController extends Controller
     }
 
     /**
+     * display records on get request
+     */
+    public function create(Request $request)
+    {
+        return view('projects.create');
+    }
+
+    /**
      * create records on post request
      */
     public function store(CreateProjectsRequest $request)
