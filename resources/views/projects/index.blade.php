@@ -1,17 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<x-app-layout>
+
 <body>
-    <h1>Your projects here</H1>
-    @forelse ($projects as $project)
-        <a href="{{ $project->path() }}">{{ $project->title }}</a>
-    @empty
-        <p>No projects yet.</P>
-    @endforelse
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Your Projects') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                @forelse ($projects as $project)
+                    <div class="p-6 bg-white border-b border-gray-200">
+                        <a href="{{ $project->path() }}">{{ $project->title }}</a>
+                    </div>
+                @empty
+                    <div class="p-6 bg-white border-b border-gray-200">
+                        No Projects Yet.
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
 </body>
-</html>
+</x-app-layout>
