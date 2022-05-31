@@ -22,7 +22,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index']);
+    Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index'])->name('projects');
 
     Route::get('/projects/create', [\App\Http\Controllers\ProjectsController::class, 'create']);
 
