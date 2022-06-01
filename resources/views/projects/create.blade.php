@@ -1,6 +1,6 @@
 <x-app-layout>
 <body>
-    <form method="POST" action="/projects" class="container">
+    <form method="POST" action="/projects">
         @csrf
 
         <x-slot name="header">
@@ -23,7 +23,12 @@
                 <label>Description</label>
             </div>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <x-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" required autofocus />
+                <textarea
+                    id="description"
+                    name="description"
+                    :value="old('description')"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    rows="3"></textarea>
             </div>
         </div>
 

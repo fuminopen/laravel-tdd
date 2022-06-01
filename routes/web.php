@@ -24,7 +24,7 @@ Route::get('/dashboard', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index'])->name('projects');
 
-    Route::get('/projects/create', [\App\Http\Controllers\ProjectsController::class, 'create']);
+    Route::get('/projects/create', [\App\Http\Controllers\ProjectsController::class, 'create'])->name('create');
 
     Route::get('/projects/{project}', [\App\Http\Controllers\ProjectsController::class, 'show']);
 

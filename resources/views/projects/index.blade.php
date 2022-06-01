@@ -1,9 +1,9 @@
 <x-app-layout>
-
 <body>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex justify-between">
             {{ __('Your Projects') }}
+            <a href="{{route('create')}}" class="text-sm text-sky-600">Create New Project</a>
         </h2>
     </x-slot>
 
