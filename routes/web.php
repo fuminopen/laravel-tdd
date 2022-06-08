@@ -21,6 +21,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/after-or-equal', [\App\Http\Controllers\AfterOrEqualValidationController::class, 'index'])->name('validation');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/projects', [\App\Http\Controllers\ProjectsController::class, 'index'])->name('projects');
 

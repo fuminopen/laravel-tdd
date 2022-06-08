@@ -13,10 +13,14 @@ class AfterOrEqualValidationTest extends TestCase
     public function test_after_or_equal_correctly_working()
     {
         $param = [
-            'start' => (new Carbon())->format('Y/m/d H:i'),
-            'end' => (new Carbon())->format('Y/m/d H:i'),
+            'dates' => [
+                [
+                    'start' => (new Carbon())->addDay()->format('Y/m/d H:i'),
+                    'end' => (new Carbon())->addDays(2)->format('Y/m/d H:i'),
+                ]
+            ]
         ];
 
-        $this->get('/after-or-equal', $param)->assertSessionHasErrors('start');
+         $this->get(route('validation', $param))->assertSessionHasNoErrors('info.0.start');
     }
 }
