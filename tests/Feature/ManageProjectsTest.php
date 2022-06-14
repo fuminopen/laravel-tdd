@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-final class ProjectsTest extends TestCase
+final class ManageProjectsTest extends TestCase
 {
     use WithFaker;
     use RefreshDatabase;
@@ -38,7 +38,7 @@ final class ProjectsTest extends TestCase
 
         $this->get($project->path())->assertRedirect('login');
 
-        $this->actingAs(User::factory()->create());
+        $this->signIn();
 
         $this->get('/projects/create')->assertStatus(200);
 
@@ -58,7 +58,7 @@ final class ProjectsTest extends TestCase
      */
     public function test_users_can_view_their_project()
     {
-        $this->be(User::factory()->create());
+        $this->signIn();
 
         $project = $this->project->factory()->create(['owner_id' => auth()->user()->id]);
 
@@ -84,7 +84,7 @@ final class ProjectsTest extends TestCase
      */
     public function test_title_needs_validation()
     {
-        $this->actingAs(User::factory()->create());
+        $this->signIn();
 
         $attributes = $this->project->factory()->raw([
             'title' => '',
@@ -99,7 +99,7 @@ final class ProjectsTest extends TestCase
      */
     public function test_description_needs_validation()
     {
-        $this->actingAs(User::factory()->create());
+        $this->signIn();
 
         $attributes = $this->project->factory()->raw([
             'description' => '',
@@ -114,7 +114,7 @@ final class ProjectsTest extends TestCase
      */
     public function test_a_project_requires_an_owner()
     {
-        $this->actingAs(User::factory()->create());
+        $this->signIn();
 
         $attributes = $this->project->factory()->raw([
             'owner_id' => null,
@@ -128,7 +128,7 @@ final class ProjectsTest extends TestCase
      */
     public function test_title_must_be_string()
     {
-        $this->actingAs(User::factory()->create());
+        $this->signIn();
 
         $attributes = $this->project->factory()->raw([
             'title' => ['this is type array'],
@@ -143,7 +143,7 @@ final class ProjectsTest extends TestCase
      */
     public function test_description_must_be_string()
     {
-        $this->actingAs(User::factory()->create());
+        $this->signIn();
 
         $attributes = $this->project->factory()->raw([
             'description' => ['this is type array'],
